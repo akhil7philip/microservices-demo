@@ -73,6 +73,8 @@ Here is the list of the variations available as Kustomize components that you co
   - Changes all Online Boutique-related branding to Google Cloud's fictitious company — Cymbal Shops. The code adds/enables an environment variable `CYMBAL_BRANDING` in the `frontend` service.
 - [**Integrate with Google Cloud Operations**](components/google-cloud-operations)
   - Enables Monitoring (Stats), Tracing, and Profiler for various services within Online Boutique. The code adds the appropriare environment variables (`ENABLE_STATS`, `ENABLE_TRACING`, `DISABLE_PROFILER`) for each YAML config file.
+- [**Integrate with SigNoz**](components/signoz)
+  - Enables observability (Traces, Metrics, and Logs) for Online Boutique using SigNoz, an open-source observability platform. The code patches services to send traces to SigNoz's OpenTelemetry collector and includes instructions for installing SigNoz and k8s-infra agent for Kubernetes telemetry collection.
 - [**Integrate with Memorystore (Redis)**](components/memorystore)
   - The default Online Boutique deployment uses the in-cluster `redis` database for storing the contents of its shopping cart. The Memorystore deployment variation overrides the default database with its own Memorystore (Redis) database. These changes directly affect `cartservice`.
 - [**Integrate with Spanner**](components/spanner)

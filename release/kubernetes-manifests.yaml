@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -820,6 +820,25 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-external
+  labels:
+    app: frontend
+spec:
+  rules:
+  - host: drdroid.akhilphilip.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-external
+            port:
+              number: 80
 ---
 apiVersion: v1
 kind: ServiceAccount

@@ -1,0 +1,148 @@
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+- ingress.yaml
+- managed-certificate.yaml
+patches:
+# checkoutservice - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: checkoutservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "checkoutservice"
+              - name: ENABLE_TRACING
+                value: "1"
+# currencyservice - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: currencyservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "currencyservice"
+              - name: ENABLE_TRACING
+                value: "1"
+# emailservice - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: emailservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "emailservice"
+              - name: ENABLE_TRACING
+                value: "1"
+# frontend - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: frontend
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "frontend"
+              - name: ENABLE_TRACING
+                value: "1"
+# paymentservice - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: paymentservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "paymentservice"
+              - name: ENABLE_TRACING
+                value: "1"
+# productcatalogservice - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: productcatalogservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "productcatalogservice"
+              - name: ENABLE_TRACING
+                value: "1"
+# recommendationservice - tracing
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: recommendationservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: COLLECTOR_SERVICE_ADDR
+                value: "signoz-otel-collector.signoz.svc.cluster.local:4317"
+              - name: OTEL_SERVICE_NAME
+                value: "recommendationservice"
+              - name: ENABLE_TRACING
+                value: "1"
+# shippingservice - tracing not yet implemented (see src/shippingservice/main.go)
+

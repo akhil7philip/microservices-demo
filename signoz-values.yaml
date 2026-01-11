@@ -1,0 +1,5 @@
+global:
+  storageClass: standard-rwo
+
+clickhouse:
+  installCustomStorageClass: true
